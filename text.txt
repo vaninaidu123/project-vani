@@ -1,0 +1,11 @@
+http://localhost/phpmyadmin/index.php?route=/sql&pos=0&db=smart_campus&table=users
+
+
+
+
+
+
+
+
+
+http://localhost/project/dashboard.php

@@ -1,0 +1,75 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+}
+
+.container{
+    display:flex;
+    height:100vh;
+}
+
+.left{
+    flex:1;
+    background:url('../images/college.jpg') no-repeat center center/cover;
+}
+
+.right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f1f5f9;
+}
+
+.form{
+    background:white;
+    padding:40px;
+    width:350px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form h2{
+    margin-bottom:25px;
+    color:#1e3a8a;
+    text-align:center;
+}
+
+.form input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:5px;
+}
+
+.form button{
+    width:100%;
+    padding:12px;
+    background:#1e3a8a;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.form button:hover{
+    background:#2563eb;
+}
+
+.form p{
+    text-align:center;
+    margin-top:15px;
+}
+
+.form a{
+    color:#1e3a8a;
+    text-decoration:none;
+}
