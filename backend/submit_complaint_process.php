@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include "config.php";
 
@@ -7,17 +8,38 @@ $category = $_POST['category'];
 $title = $_POST['title'];
 $description = $_POST['description'];
 
-$stmt = $conn->prepare("INSERT INTO complaints (user_id, category, title, description) VALUES (?, ?, ?, ?)");
+$image_name = "";
 
-$stmt->bind_param("isss", $user_id, $category, $title, $description);
+/* image upload */
+
+if(isset($_FILES['image']) && $_FILES['image']['name']!=""){
+
+$target_dir = "../uploads/";
+
+if(!is_dir($target_dir)){
+mkdir($target_dir);
+}
+
+$image_name = time()."_".$_FILES['image']['name'];
+
+$target_file = $target_dir.$image_name;
+
+move_uploaded_file($_FILES['image']['tmp_name'],$target_file);
+
+}
+
+$stmt = $conn->prepare("INSERT INTO complaints (user_id,category,title,description,image) VALUES (?,?,?,?,?)");
+
+$stmt->bind_param("issss",$user_id,$category,$title,$description,$image_name);
 
 if($stmt->execute()){
 
-echo "Complaint submitted successfully!";
+header("Location: ../dashboard.php");
 
 }else{
 
-echo "Error submitting complaint.";
+echo "Error submitting complaint";
 
 }
+
 ?>
