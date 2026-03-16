@@ -1,34 +1,37 @@
 <?php
-session_start();
+
 include "config.php";
 
-$name = trim($_POST['name']);
-$email = trim($_POST['email']);
-$password = trim($_POST['password']);
-$branch = trim($_POST['branch']);
-$year = trim($_POST['year']);
+$name   = $_POST['name'];
+$email  = $_POST['email'];
+$password = $_POST['password'];
+$branch = $_POST['branch'];
+$year   = $_POST['year'];
 
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+/* check if email already exists */
 
-// Check if email already exists
-$check = $conn->prepare("SELECT id FROM users WHERE email = ?");
-$check->bind_param("s", $email);
-$check->execute();
-$check->store_result();
+$check = mysqli_query($conn,"SELECT * FROM users WHERE email='$email'");
 
-if ($check->num_rows > 0) {
-    echo "Email already registered!";
-    exit();
+if(mysqli_num_rows($check) > 0){
+
+header("Location: ../register.php?error=email");
+exit();
+
 }
 
-// Insert new user
-$stmt = $conn->prepare("INSERT INTO users (name, email, password, branch, year) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("sssss", $name, $email, $hashed_password, $branch, $year);
+/* insert new user */
 
-if ($stmt->execute()) {
-    header("Location: ../login.php");
-    exit();
-} else {
-    echo "Error: " . $stmt->error;
+$sql = "INSERT INTO users(name,email,password,branch,year)
+VALUES('$name','$email','$password','$branch','$year')";
+
+if(mysqli_query($conn,$sql)){
+
+header("Location: ../login.php?success=registered");
+
+}else{
+
+echo "Database Error";
+
 }
+
 ?>

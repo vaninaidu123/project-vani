@@ -1,33 +1,34 @@
 <?php
+
 session_start();
 include "config.php";
 
-$email = trim($_POST['email']);
-$password = trim($_POST['password']);
+$email=$_POST['email'];
+$password=$_POST['password'];
 
-$stmt = $conn->prepare("SELECT id, name, password FROM users WHERE email = ?");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$stmt->store_result();
+$result=mysqli_query($conn,"SELECT * FROM users WHERE email='$email'");
 
-if ($stmt->num_rows > 0) {
+if(mysqli_num_rows($result)>0){
 
-    $stmt->bind_result($id, $name, $hashed_password);
-    $stmt->fetch();
+$user=mysqli_fetch_assoc($result);
 
-    if (password_verify($password, $hashed_password)) {
+if($password==$user['password']){
 
-        $_SESSION['user_id'] = $id;
-        $_SESSION['user_name'] = $name;
+$_SESSION['user_id']=$user['id'];
+$_SESSION['user_name']=$user['name'];
 
-        header("Location: ../dashboard.php");
-        exit();
+header("Location: ../dashboard.php");
 
-    } else {
-        echo "Invalid Password!";
-    }
+}else{
 
-} else {
-    echo "User not found!";
+header("Location: ../login.php?error=wrongpassword");
+
 }
+
+}else{
+
+header("Location: ../login.php?error=nouser");
+
+}
+
 ?>
