@@ -288,7 +288,6 @@ RGUKT Nuzvid
 
 <p>Smart Campus Complaint Management System</p>
 
-<a href="login.php" class="btn btn-warning mt-3">File Complaint</a>
 
 </div>
 
